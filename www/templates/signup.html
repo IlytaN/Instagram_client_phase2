@@ -1,0 +1,20 @@
+<ion-view>
+  <ion-content scroll="false">
+    <div class="list has-header">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Username</span>
+        <input type="text" ng-model="user.name">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Password</span>
+        <input type="text" ng-model="user.password">
+      </label>
+      <button class="button button-block button-positive" ng-click="signup()">
+        Sign up
+      </button>
+    </div>
+    <div class="footer">
+      <h4>Already have an account? <a href="#/login">Log in</a></h4>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,23 @@
+<ion-view>
+  <div class="login-header">
+    <h1>Instagram</h1>
+  </div>
+  <ion-content class="has-login-header" scroll="false">
+    <div class="list">
+      <label class="item item-input">
+        <span class="input-label">Username</span>
+        <input type="text" ng-model="user.name">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Password</span>
+        <input type="password" ng-model="user.password">
+      </label>
+      <button class="button button-block button-positive" ng-click="login()">
+        Log in
+      </button>
+    </div>
+    <div class="footer">
+      <h4>Don't have an account? <a href="#/signup">Sign up</a></h4>
+    </div>
+  </ion-content>
+</ion-view>
