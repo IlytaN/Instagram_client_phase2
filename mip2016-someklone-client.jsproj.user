@@ -4,4 +4,7 @@
     <DebuggerFlavor>AndroidEmulator</DebuggerFlavor>
     <AndroidEmulatorID>AndroidDevice;Device</AndroidEmulatorID>
   </PropertyGroup>
+  <PropertyGroup>
+    <ReferenceCachePath>C:\Users\Quynh Huong\AppData\Local\Temp\mip2016-someklone-client_refcache</ReferenceCachePath>
+  </PropertyGroup>
 </Project>

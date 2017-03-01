@@ -2,7 +2,7 @@
     <ion-header-bar align-title="left" >
         <div class="buttons" >
             <button class="button button-icon ion-ios-arrow-back" ng-click="goBack()"></button>
-        </div>        
+        </div>
         <label class="item-input-wrapper">
           <input type="search" placeholder="Search" class="headerInput" ng-model="input.searchText" ng-change="updateSearch()">
         </label>
@@ -15,24 +15,24 @@
             </a>
             <a class="tab-item" ng-class="{active: tabs.tags == true }" ng-click="tabActivate('tags')">
                 Tags
-            </a>  
+            </a>
         </div>
         <div ng-if="tabs.people">
             <div class="list">
-                <a class="item item-avatar" href="#" ng-repeat="p in searchResults.people">
-                <img src="{{ p.profileImageSmall }}">
-                <h2>{{ p.username }}</h2>
-                <p>{{ p.fullName }}</p>
+                <a class="item item-avatar" ng-repeat="pp in searchResults.people">
+                  <img src="{{ pp.image }}">
+                  <h2>{{ pp.user.username }}</h2>
+                  <p>{{ pp.user.username }}</p>
                 </a>
 
             </div>
         </div>
         <div ng-if="tabs.tags">
-            <div class="list">
-                <a class="item item-avatar" href="#">
-                <i class="icon ion-pound"></i>
-                <h2>#tupac</h2>
-                <p>87,345 posts</p>
+            <div class="list" ng-repeat="tag in searchResults.tags">
+                <a class="item item-avatar" ng-click="showTaggedPosts(tag)" >
+                  <i class="icon ion-pound"></i>
+                  <h2>{{tag.tagname}}</h2>
+                  <p>{{tag.numbertagposts}} posts</p>
                 </a>
             </div>
         </div>

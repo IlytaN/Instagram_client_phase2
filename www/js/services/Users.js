@@ -117,7 +117,7 @@ angular.module('someklone.services').factory('Users', function($q,$http,appConfi
           return $q(function(resolve, reject){
             if(user != null)
             {
-              resolve();
+              resolve(user);
             }
             else
             {
@@ -142,7 +142,6 @@ angular.module('someklone.services').factory('Users', function($q,$http,appConfi
            });
          });
        }
-
     };
 
 })

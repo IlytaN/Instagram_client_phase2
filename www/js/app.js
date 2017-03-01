@@ -85,6 +85,16 @@ angular.module('someklone', ['ionic', 'someklone.controllers', 'someklone.servic
     }
   })
 
+  .state('tab.taggedposts', {
+    url: '/search/tags',
+      views: {
+        'tab-browse': {
+          templateUrl: 'templates/taggedPosts.html',
+          controller: 'TaggedPostsCtrl'
+      }
+    }
+  })
+
   .state('tab.activity', {
     url: '/activity',
       views: {

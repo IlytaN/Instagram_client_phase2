@@ -1,6 +1,10 @@
 angular.module('someklone.controllers', [])
 
-.controller('HomeCtrl', function($scope, $state, Posts) {
+.controller('HomeCtrl', function($scope, $state, Posts,Users) {
+    Users.isLogged().then(function(user) {
+      $scope.loggedUser = user;
+    });
+    console.log($scope.loggedUser);
     Posts.following().then(function(data)
         {
             $scope.posts = data;
@@ -10,6 +14,11 @@ angular.module('someklone.controllers', [])
     $scope.toggleLike = function(post)
     {
         Posts.toggleLike(post);
+    }
+
+    $scope.toggleFollow = function(post)
+    {
+        Users.toggleFollow(post);
     }
 
     $scope.comment = function(post)
@@ -36,7 +45,7 @@ angular.module('someklone.controllers', [])
     console.log($stateParams);
 })
 
-.controller('SearchCtrl', function($scope, $state, $ionicHistory, Users) {
+.controller('SearchCtrl', function($scope, $state, $ionicHistory, Users, Posts) {
 
     $scope.input = {
         searchText: ""
@@ -81,15 +90,35 @@ angular.module('someklone.controllers', [])
     {
         if($scope.tabs.people == true)
         {
-            Users.searchUser($scope.input.searchText).then(function(result) {
+            Posts.searchUser($scope.input.searchText).then(function(result) {
                 $scope.searchResults.people = result;
+                console.log($scope.searchResults.people);
             });
         }
         else // search for posts with tags
         {
-
+          Posts.searchTag($scope.input.searchText).then(function(result) {
+              $scope.searchResults.tags = result;
+              console.log($scope.searchResults.tags);
+          });
         }
     };
+
+    $scope.showTaggedPosts = function(tag){
+      $state.go('tab.taggedposts');
+      console.log(tag.tagname);
+    }
+
+})
+
+.controller('TaggedPostsCtrl', function($scope, $stateParams, Users, $ionicPopup, $ionicHistory, $state) {
+
+  $scope.goBackSearch = function(){
+    $ionicHistory.nextViewOptions({
+        disableBack: true
+    });
+    $state.go('tab.browse-search');
+  }
 })
 
 .controller('PostCtrl', function($scope, $state, $ionicHistory, $ionicPlatform, $cordovaCamera, $ionicScrollDelegate) {
@@ -175,7 +204,7 @@ angular.module('someklone.controllers', [])
 
 })
 
-.controller('PostConfirmCtrl', function($scope, $state, $stateParams, $ionicHistory, Posts){
+.controller('PostConfirmCtrl', function($scope,$window, $state, $stateParams, $ionicHistory, $http, Posts){
     $scope.post = {
         imageUri: $stateParams.imageUri,
         caption: ""
@@ -196,6 +225,7 @@ angular.module('someklone.controllers', [])
                 disableBack: true
             });
             $state.go('tab.home');
+            $window.location.reload();
         });
     };
 })

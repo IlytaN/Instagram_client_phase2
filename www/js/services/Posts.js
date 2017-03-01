@@ -24,10 +24,50 @@ angular.module('someklone.services').factory('Posts', function($q, $http, appCon
             });
         },
         // search posts based on tags
-        searchTag: function()
+        searchTag: function(tag)
         {
             return $q(function(resolve, reject){
-                resolve(posts);
+              var withhash = "#" + tag;
+              $http.post(appConfig.apiAddr + "search/tags", {tags: withhash } ).then(function(response){
+                if(response.status == 200)
+                    {
+                      if ( response.data !== "no posts found!" ){
+                        var taggedposts =[];
+                        taggedposts = taggedposts.concat(response.data);
+                        console.log(taggedposts);
+                      }
+                      resolve(taggedposts);
+                    }
+                    else
+                    {
+                      reject();
+                    }
+              },function(err){
+                  reject();
+              });
+            });
+        },
+        searchUser: function(user)
+        {
+            return $q(function(resolve, reject){
+              var findUser = user;
+              $http.post(appConfig.apiAddr + "search/user", {user: findUser } ).then(function(response){
+                if(response.status == 200)
+                    {
+                      if ( response.data !== "no posts found!" ){
+                        var FoundUserPosts =[];
+                        FoundUserPosts = FoundUserPosts.concat(response.data);
+                        console.log(FoundUserPosts);
+                      }
+                      resolve(FoundUserPosts);
+                    }
+                    else
+                    {
+                      reject();
+                    }
+              },function(err){
+                  reject();
+              });
             });
         },
         // get all posts of single user
@@ -41,12 +81,17 @@ angular.module('someklone.services').factory('Posts', function($q, $http, appCon
         },
         new: function(imageUri, caption)
         {
+            var start_cap = caption.search("#");
+            var first_slice = caption.slice(start_cap);
+            var a = first_slice + " ";
+            var end_cap = a.search(" ");
+            var tag = first_slice.slice(0,end_cap);
             return $q(function(resolve, reject) {
                 var newPost = {
                     id: posts.length,
                     user: {
                         id: 1,
-                        username: "huong",
+                        username: "test",
                         profileImageSmall: "http://core0.staticworld.net/images/article/2015/11/111915blog-donald-trump-100629006-primary.idge.jpg"
                     },
                     image: imageUri,
@@ -54,7 +99,7 @@ angular.module('someklone.services').factory('Posts', function($q, $http, appCon
                     likes: 0,
                     userLike: false,
                     caption: caption,
-                    tags: [],  // tag identification logic not yet implemented
+                    tags: [tag],
                     comments: []
                 };
 
